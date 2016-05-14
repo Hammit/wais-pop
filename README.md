@@ -1,7 +1,7 @@
 # wais-pop
-WAIS Pi Oximeter Project - Realtime monitoring of Athletes using Nonin WristOx
+WAIS Pi Oximeter Project - Realtime monitoring of Athletes using the Nonin WristOx
 
-## Welcome to WAIS-POP, it's not candy, it's POP!
+**Welcome to WAIS-POP, it's not candy, it's POP!**
 
 ### Directory Structure Overview
 ```
@@ -13,7 +13,5 @@ src/
 tmp/
 ```
 
-## Setup
-See SETUP.txt
-
-##
+### Setup
+See doc/SETUP.txt
