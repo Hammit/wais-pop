@@ -1,0 +1,22 @@
+from IPython.html import widgets # Widget definitions
+from IPython.display import display # Used to display widgets in the notebook
+
+password = ''
+
+def set_password(this):
+    global username, username_widget, password, password_widget
+    username = username_widget.value
+    password = password_widget.value
+    password_widget.value = ''
+
+
+display(widgets.HTMLWidget(value='Username'))
+username_widget = widgets.TextWidget()
+display(username_widget)
+display(widgets.HTMLWidget(value='Password'))
+password_widget = widgets.TextWidget()
+display(password_widget)
+
+set_login_button = widgets.ButtonWidget(description='Set')
+set_login_button.on_click(set_password)
+display(set_login_button)

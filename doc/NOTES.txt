@@ -1,0 +1,26 @@
+The `bin/spp-log.sh` script is executed each time a Bluetooth
+connection using the SPP is made. It logs details about the SPP
+connection into '$HOME/tmp/'.
+
+To configure the script to execute, right click the Bluetooth
+indicator in the Desktop panel and click Plugins. Then SerialManager
+> Configuration > Script to execute on connection.
+
+
+
+wais@wais-desktop:~/bin$ sudo ./test-nonin.py
+Opening /dev/rfcomm0...
+Opened /dev/rfcomm0
+Found Nonin 3150 at /dev/rfcomm0, software 7813.026.20130702
+Current time as reported by device in GMT: 2010-01-02 01:46:46 UTC
+  (Converted to your current local timezone: 2010-01-02 09:46:46 AWST)
+Before setting Nonin clock:
+   Time on Nonin, GMT: 2010-01-02 01:46:48 UDT
+   Time on Nonin, translated to local timezone: 2010-01-02 09:46:48+0800
+
+
+Google Searches
+================
+nonin python
+wristox python
+

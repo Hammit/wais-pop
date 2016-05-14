@@ -1,0 +1,49 @@
+1. Create a 'wais' user
+
+2. Ensure the system has the correct date and time
+
+3. Schedule regular backups
+
+As the 'wais' user, install the following crontab entry (`crontab -e`)
+0 0 * * 1 /home/wais/bin/backup.sh
+OR
+@weekly /home/wais/bin/backup.sh
+
+This will create weekly backups in $HOME/backup
+
+4. Install Dependencies
+`sudo apt-get install vim git python-serial python-dateutil`
+
+5. Ensure Python scripts have access to the ~/lib/ dir
+Add the following to ~/.bashrc
+`export PYTHONPATH=~/lib`
+
+6. Add 'wais' user to the dialout group (ensuring access to /dev/rfcomm*)
+This ensures the 'wais' user has the necessary privileges to execute scripts.
+This is important because if sudo is used to escalate privileges then we may
+lose important environmental information (like PYTHONPATH)
+
+7. Reboot (or at least logout and login again)
+This is necessary to reflect .bashrc and group information changes
+
+
+NOTES
+=====
+
+When executing the Python scripts, ensure you have a valid PYTHONPATH.
+For example...
+`PYTHONPATH=~/lib ./test-nonin.py`
+OR
+export PYTHONPATH=~/lib
+./test-nonin.py
+
+If you need to use `sudo`, do the following...
+sudo PYTHONPATH=/home/wais/lib ./nonin-datetime.py
+
+You will lose the environment variable if you put PYTHONPATH before the sudo
+
+Another technique would be to change sys.path at runtime
+`
+import sys
+sys.path.append('/home/wais/lib/')
+`

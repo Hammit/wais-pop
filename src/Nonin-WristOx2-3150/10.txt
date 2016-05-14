@@ -1,0 +1,25 @@
+import itertools
+samples = list(itertools.chain(*sessions))
+print len(samples), 'samples'
+
+fig, ax = plt.subplots(figsize=(40,6))
+
+times = [sample[0] for sample in samples]
+
+ax.plot(times, [sample[1] for sample in samples], label="Pulse")
+ax.plot(times, [sample[2] for sample in samples], label="SpO2")
+
+# Legend above plot
+ax.legend(loc='upper center', bbox_to_anchor=(0.5, 1.10),
+          fancybox=True, shadow=True, ncol=5)
+
+# plt.gcf().autofmt_xdate()  # Nice dates on X axis
+
+#ax.xaxis.set_major_formatter(FuncFormatter(lambda x, pos: '%.6f' % x))
+
+ax.grid(alpha=0.5, linestyle='dashed', linewidth=0.5) # Grid
+
+ax.xaxis.set_major_formatter(matplotlib.dates.DateFormatter('%m/%d %H:%M:%S %Z', tz=tz.tzlocal()))
+plt.xticks(rotation='vertical')
+
+None

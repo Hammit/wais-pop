@@ -1,0 +1,58 @@
+import base64
+import json
+import httplib
+import urllib
+
+# Concatenate all the sessions into a single list of samples
+samples = list(itertools.chain(*sessions))
+
+# April 2014:  Bug in fluxtream.org prevents uploading samples with nulls;  for now, filter out None's
+# We can remove these 3 lines once that's fixed
+print '%d samples' % len(samples)
+samples = [sample for sample in samples if not None in sample]
+print '%d samples after filtering out samples containing None' % len(samples)
+
+def epoch_time(dt):
+    epoch = datetime.datetime(1970, 1, 1, tzinfo=tz.tzutc())
+    return (dt - epoch).total_seconds()    
+
+# Convert timestamps to epoch time
+
+print 'Data has %d samples' % len(samples)
+data = [[epoch_time(sample[0]), sample[1], sample[2]] for sample in samples]
+print 'Excerpt:', data[0:10]
+
+user_agent = 'Nonin3150 uploader'
+server = 'fluxtream.org'
+dev_nickname = 'Nonin3150'
+channel_names = ['Pulse', 'SpO2']
+
+post_fields = {
+    'dev_nickname': dev_nickname,
+    'channel_names': json.dumps(channel_names),
+    'data': json.dumps(data)
+}
+    
+webservice = httplib.HTTP(server)
+webservice.putrequest('POST', '/api/bodytrack/upload')
+
+webservice.putheader('User-Agent', user_agent)
+webservice.putheader('Content-type', 'application/x-www-form-urlencoded')
+
+encoded_fields = urllib.urlencode(post_fields)
+webservice.putheader('Content-length', "%d" % len(encoded_fields))
+
+auth = base64.encodestring('%s:%s' % (username, password)).strip()
+webservice.putheader('Authorization', 'Basic %s' % auth)
+
+webservice.endheaders()
+
+print datetime.datetime.now().strftime('Current timestamp: %Y-%m-%d %H:%M:%S')
+print 'Uploading %d samples' % (len(samples))
+webservice.send(encoded_fields)
+
+# get the response
+statuscode, statusmessage, header = webservice.getreply()
+print "Response: ", statuscode, statusmessage
+res = webservice.getfile().read()
+print 'Content: ', res

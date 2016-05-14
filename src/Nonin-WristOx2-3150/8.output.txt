@@ -1,0 +1,22 @@
+Opening /dev/cu.usbmodemfa131...
+Opened /dev/cu.usbmodemfa131
+Found Nonin 3150 at /dev/cu.usbmodemfa131, software 7813.026.20130702
+Current time as reported by device in GMT: 2014-09-21 22:47:12 UTC
+  (Converted to your current local timezone: 2014-09-21 18:47:12 EDT)
+Before setting Nonin clock:
+   Time on Nonin, GMT: 2014-09-21 22:47:12 UDT
+   Time on Nonin, translated to local timezone: 2014-09-21 18:47:12-0400
+Setting clock on Nonin to current host time...
+After setting Nonin clock:
+   Time on Nonin, GMT: 2014-09-21 22:46:26 UDT
+   Time on Nonin, translated to local timezone: 2014-09-21 18:46:26-0400
+Reading memory from Nonin...
+Read 53082 bytes
+Session header starting at triplet 0
+  Seconds per sample: 1
+  Time range: 2014-09-07 02:22:20 UTC to 2014-09-07 07:16:51 UTC
+  17672 data samples
+Session header starting at triplet 17683
+  Seconds per sample: 1
+  0 data samples
+Total of 1 valid sessions

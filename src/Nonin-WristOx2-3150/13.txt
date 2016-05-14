@@ -1,0 +1,2 @@
+# Uncomment and evaluate this when you want to clear out the data from your Nonin
+# nonin.clear_sessions()

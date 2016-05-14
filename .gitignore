@@ -15,7 +15,7 @@ dist/
 downloads/
 eggs/
 .eggs/
-lib/
+#lib/ <= REMOVED SO I CAN KEEP MY LIBRARY FILES HERE
 lib64/
 parts/
 sdist/
@@ -60,3 +60,6 @@ target/
 
 #Ipython Notebook
 .ipynb_checkpoints
+
+# Backups
+backup/wais-pop.*.tgz

@@ -1,0 +1,8 @@
+17672 samples
+17612 samples after filtering out samples containing None
+Data has 17612 samples
+Excerpt: [[1410056554.0, 40, 83], [1410056555.0, 51, 83], [1410056556.0, 53, 83], [1410056557.0, 53, 83], [1410056558.0, 53, 83], [1410056559.0, 53, 83], [1410056560.0, 53, 83], [1410056561.0, 53, 83], [1410056562.0, 53, 83], [1410056563.0, 53, 83]]
+Current timestamp: 2014-09-21 18:47:53
+Uploading 17612 samples
+Response:  200 OK
+Content:  {"result":"OK","message":"Upload successful!","payload":{"successful_records":"1","failed_records":"0"}}
