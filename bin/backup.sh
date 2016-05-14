@@ -1,6 +1,9 @@
 #!/bin/bash
 
-date=`date +%F`
-cd ~
-tar -cvzf ~/backup/wais-pop.${date}.tgz bin/ lib/ src/ Documents/
+BACKUP_DIR=~/backup
 
+date=`date +%F`
+if [ ! -d $BACKUP_DIR ]; then mkdir $BACKUP_DIR; fi
+
+backup_filename="${BACKUP_DIR}/wais-pop.${date}.tgz"
+tar -chvzf ${backup_filename} -C $HOME bin/ doc/ lib/ src/
