@@ -16,6 +16,7 @@ import glob
 from dateutil import tz
 import serial
 import struct
+import csv
 
 class Nonin3150:
     """Interface to Nonin WristOx2 3150"""
@@ -253,4 +254,25 @@ class Nonin3150:
     def require_crlf(self):
         if self.device.read(2) != '\r\n':
             raise Exception('Expected CRLF not received')
+
+
+class Exporter():
+    """
+    Export facilities for saving session data on the device to various file-
+    formats.
+    """
+
+    def __init__(self, sessions):
+        self.sessions = sessions
+
+    def export(self, format='csv', filename=None):
+        if format == 'csv':
+            self._export_as_csv(filename)
+
+    def _export_as_csv(self, filename):
+        with open(filename, 'wb') as csvfile:
+            csvwriter = csv.writer(csvfile)
+            for session in self.sessions:
+                for sample in session:
+                    csvwriter.writerow(sample)
 
