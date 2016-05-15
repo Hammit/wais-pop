@@ -124,6 +124,11 @@ class Nonin3150:
         self.device.write(datetime.datetime.utcnow().strftime('DTM=%y%m%d%H%M%S\r\n'))
         self.require_ack()
         self.require_crlf()
+
+    def set_bluetooth_timeout(self, period=3):
+        self.device.flushInput()
+        self.device.write('SBT=%03d\r\n' % period)
+        self.require_ack()
     
     def get_header(self):
         self.device.flushInput()
