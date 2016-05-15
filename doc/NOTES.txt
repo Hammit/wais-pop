@@ -20,7 +20,13 @@ Before setting Nonin clock:
 
 
 Google Searches
-================
+===============
 nonin python
 wristox python
+
+
+GitHub Projects
+===============
+https://github.com/charlesfracchia/pyNonin
+https://github.com/fluxtream/fluxtream-ipy
 
