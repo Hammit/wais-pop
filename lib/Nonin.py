@@ -16,6 +16,7 @@ import glob
 from dateutil import tz
 import serial
 import struct
+import time
 import csv
 
 class Nonin3150:
@@ -247,6 +248,7 @@ class Nonin3150:
         return ret
     
     def require_ack(self):
+        time.sleep(1)
         byte = self.device.read(1)
         if byte != '\x06':
             raise Exception('Expected ACK not received')

@@ -10,7 +10,7 @@ def csv_filename(device_id=0):
     filename = '/tmp/wristox-sessions.%d.%s.csv' % (device_id, dt_str)
     return filename
 
-POLL_INTERVAL = 45 # seconds
+POLL_INTERVAL = 150 # seconds
 
 device = Nonin3150.get_device()
 nonin = Nonin3150(device)
@@ -25,7 +25,7 @@ while True:
         if sessions is not None:
             exporter = Exporter(sessions)
             filename = csv_filename(device_id=2)
-            print "Saving session data to %s" % csv_filename
+            print "Saving session data to %s" % filename
             exporter.export(format='csv', filename=filename)
 
             print "Clearing device memory"
