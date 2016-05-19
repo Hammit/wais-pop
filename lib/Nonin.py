@@ -16,7 +16,6 @@ import glob
 from dateutil import tz
 import serial
 import struct
-import time
 import csv
 
 class Nonin3150:
@@ -46,12 +45,6 @@ class Nonin3150:
     date_format = '%Y-%m-%d %H:%M:%S %Z'
     
     def __init__(self, device_path):
-        #candidates = glob.glob('/dev/cu.usbmodem*')
-        #if len(candidates) == 0:
-        #    raise Exception("Can't find Nonin device.  Please be sure it's plugged in using the USB cable.")
-        #if len(candidates) > 1:
-        #    raise Exception("Hmm, found multiple USB serial ports.  Need to address this issue in the software.")
-        #self.device_path = candidates[0]
         self.device_path = device_path
         print 'Opening %s...' % self.device_path
         self.device = serial.Serial(self.device_path, timeout=4)
@@ -248,7 +241,6 @@ class Nonin3150:
         return ret
     
     def require_ack(self):
-        time.sleep(1)
         byte = self.device.read(1)
         if byte != '\x06':
             raise Exception('Expected ACK not received')
