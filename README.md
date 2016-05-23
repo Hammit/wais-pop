@@ -22,6 +22,8 @@ tmp/
     * DateUtil
     * Pandas
     * Matplotlib
+    * Flask
+    * Flask-SQLAlchemy
 
 ### Setup
 See doc/SETUP.txt
