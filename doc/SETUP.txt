@@ -14,16 +14,20 @@ This will create weekly backups in $HOME/backup
 4. Install Dependencies
 `sudo apt-get install vim git python-serial python-dateutil`
 
-5. Ensure Python scripts have access to the ~/lib/ dir
+5. Configure Sudo
+/etc/sudoers.d/wais should contain the following
+%adm ALL=NOPASSWD: ALL
+
+6. Ensure Python scripts have access to the ~/lib/ dir
 Add the following to ~/.bashrc
 `export PYTHONPATH=~/lib`
 
-6. Add 'wais' user to the dialout group (ensuring access to /dev/rfcomm*)
+7. Add 'wais' user to the dialout group (ensuring access to /dev/rfcomm*)
 This ensures the 'wais' user has the necessary privileges to execute scripts.
 This is important because if sudo is used to escalate privileges then we may
 lose important environmental information (like PYTHONPATH)
 
-7. Reboot (or at least logout and login again)
+8. Reboot (or at least logout and login again)
 This is necessary to reflect .bashrc and group information changes
 
 
