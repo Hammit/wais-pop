@@ -1,22 +1,42 @@
 #!/usr/bin/env python2
 
+import re
+import sys
 import time
 import datetime
 from Nonin import *
 
+POLL_INTERVAL = 105 # seconds
+
 def csv_filename(device_id=0):
+    # device_id can be a dev node like /dev/rfcomm0
+    try:
+        device_id = int(device_id)
+
+    except ValueError:
+        device_id = re.sub('^\D+', '', device_id)
+
     dt = datetime.datetime.now()
     dt_str = dt.strftime('%Y-%m-%dT%H:%M:%S')
-    filename = '/tmp/wristox-sessions.%d.%s.csv' % (device_id, dt_str)
+    filename = '/home/wais/tmp/wristox-sessions.%d.%s.csv' % (device_id, dt_str)
     return filename
 
-POLL_INTERVAL = 150 # seconds
 
-device = Nonin3150.get_device()
-nonin = Nonin3150(device)
+ack_problem = True
+nonin = None
 
-# time.sleep(5) # wait for the device to finish changing modes if necessary
+while ack_problem:
+    try:
+        # device = Nonin3150.get_device()
+        device = sys.argv[1]
+        nonin = Nonin3150(device)
+        ack_problem = False
 
+    except Exception:
+        ack_problem = True
+        time.sleep(1)
+
+# no ack_problem and nonin is now guaranteed to be a valid Nonin3150
 while True:
     # Read, Save and Clear session data from the device
     print "Reading data..."
@@ -34,10 +54,11 @@ while True:
             print "Waiting for %d seconds" % POLL_INTERVAL
             time.sleep(POLL_INTERVAL)
     except Exception:
+        time.sleep(1)
         print "Exception raised, probably an ACK required"
 
 #import pdb
 #pdb.set_trace()
-for session in sessions[0]: print session
-print "Finished!"
+#for session in sessions[0]: print session
+#print "Finished!"
 
