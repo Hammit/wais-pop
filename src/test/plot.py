@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import pandas
 import glob
 
-files = glob.glob('../../tmp/wristox-sessions.*.csv')
+files = glob.glob('/tmp/wristox-sessions.2.csv')
 files.sort()
 
 for file in files:
