@@ -14,7 +14,7 @@ def csv_filename(device_id=0):
         device_id = int(device_id)
 
     except ValueError:
-        device_id = re.sub('^\D+', '', device_id)
+        device_id = int(re.sub('^\D+', '', device_id))
 
     dt = datetime.datetime.now()
     dt_str = dt.strftime('%Y-%m-%dT%H:%M:%S')
@@ -44,7 +44,7 @@ while True:
         sessions = nonin.read_sessions()
         if sessions is not None:
             exporter = Exporter(sessions)
-            filename = csv_filename(device_id=2)
+            filename = csv_filename(device_id=device)
             print "Saving session data to %s" % filename
             exporter.export(format='csv', filename=filename)
 
