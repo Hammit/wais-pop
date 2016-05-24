@@ -63,3 +63,6 @@ target/
 
 # Backups
 backup/wais-pop.*.tgz
+
+# Data Files
+tmp/*.csv
