@@ -1,5 +1,6 @@
 #!/usr/bin/env python2
 
+import time
 import sys
 from Nonin import *
 
@@ -14,6 +15,7 @@ while ack_problem:
         timeout = 0
         print 'Setting Bluetooth Timeout Period: %d' % timeout
         nonin.set_bluetooth_timeout(timeout)
+        ack_problem = False
 
     except Exception:
         ack_problem = True
