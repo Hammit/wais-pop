@@ -1,26 +1,40 @@
 #!/usr/bin/env python2
 
-import time
-import datetime
+import sys, time, datetime
 from Nonin import *
 
-device_id = 2
+finished = False
 
-device = Nonin3150.get_device()
-nonin = Nonin3150(device)
+while not finished:
+    try:
+		device = sys.argv[1]
+		nonin = Nonin3150(device)
 
-# time.sleep(5) # wait for the device to finish changing modes if necessary
+		time.sleep(2)
 
-dt = datetime.datetime.now()
-dt_str = dt.strftime('%Y-%m-%dT%H:%M:%S')
+		print 'Attempting to read session data on the device...'
+		sessions = nonin.read_sessions()
 
-csv_filename = '/tmp/wristox-sessions.%d.%s.csv' % (device_id, dt_str)
+		dt = datetime.datetime.now()
+		dt_str = dt.strftime('%Y-%m-%dT%H:%M:%S')
 
-sessions = nonin.read_sessions()
-exporter = Exporter(sessions)
-exporter.export(format='csv', filename=csv_filename)
+		csv_filename = '/tmp/wristox-sessions.%d.%s.csv' % (982146, dt_str)
 
-#import pdb
-#pdb.set_trace()
-for session in sessions[0]: print session
-print "Finished!"
+		print 'Exporting data...'
+		exporter = Exporter(sessions)
+		exporter.export(format='csv', filename=csv_filename)
+
+		finished = True
+
+    except Exception as e:
+		print e
+		# if nonin:
+		# 	nonin.device.close()
+		time.sleep(2)
+
+
+# import pdb
+# pdb.set_trace()
+
+# for session in sessions[0]: print session
+# print "Finished!"
