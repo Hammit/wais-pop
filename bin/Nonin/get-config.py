@@ -14,6 +14,9 @@ while not finished:
         nonin = Nonin3150(device)
 
         config = nonin.get_config()
+        for key in config:
+            print '{:<27} = {}'.format(key, config[key])
+
         finished = True
 
     except Exception:
@@ -24,3 +27,4 @@ import pdb
 pdb.set_trace()
 
 print config
+

@@ -226,7 +226,7 @@ class Nonin3150:
     def read_until_timeout(self):
         ret = ''
         while True:
-            read = self.device.read(1000)
+            read = self.device.read(100000)
             if read == '':
                 return ret
             ret += read
