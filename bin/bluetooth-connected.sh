@@ -1,4 +1,9 @@
 #!/bin/bash
+#
+# This script is called by the Bluetooth Manager (BlueMan) whenever a serial port connection is made
+# System > Preferences > Hardware > Bluetooth Manager
+# Now, View > Plugins > SerialManager > Configuration
+# Enter the name of this script in the "Script to execute on action" field
 
 ADDRESS=$1
 NAME=$2
