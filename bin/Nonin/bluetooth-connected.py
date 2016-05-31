@@ -6,6 +6,7 @@ import datetime
 import logging
 import signal
 import argparse
+from Nonin import *
 
 POLLING_INTERVAL = 120
 
@@ -19,7 +20,7 @@ def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("address", help="the MAC address of the connecting device")
     parser.add_argument("name", help="the name of the device connecting")
-    parser.add_argument("service_name", help="the service name")
+    parser.add_argument("service_name", help="the service name. e.g. Serial Port")
     parser.add_argument("uuid", help="UUID, which can be a comma separated list. e.g. 0x1011")
     parser.add_argument("device", help="the device node. e.g. /dev/rfcomm0")
     args = parser.parse_args()
@@ -30,7 +31,7 @@ def log_filename(filename=None):
     if filename is None:
         dt = datetime.datetime.now()
         dt_str = dt.strftime('%Y-%m-%dT%H:%M:%S')
-        filename = 'bluetooth-connect.%s.log' % dt_str
+        filename = 'bluetooth-connected.%s.log' % dt_str
     script_dir = os.path.dirname(os.path.abspath(__file__))
     path = os.path.join(script_dir, '..', '..', 'tmp', filename)
     return path
@@ -63,6 +64,7 @@ if __name__ == "__main__":
 
     # Setup Logging
     logfile = log_filename()
+    print 'Log filename: {}'.format(logfile)
     logging.basicConfig(filename=logfile, level=logging.INFO, format='%(levelname)s: %(asctime)s %(message)s')
 
     # Signal Handling
@@ -70,7 +72,7 @@ if __name__ == "__main__":
 
     # Main Loop
     finished = False
-    while not finished
+    while not finished:
         try:
             nonin = Nonin3150(args.device)
             logging.info('Connected to %s' % args.device)
@@ -85,7 +87,7 @@ if __name__ == "__main__":
 
             # nonin.enable_logging() # already done above (ActivationOption)
             nonin.set_bluetooth_timeout(0)
-            nonin.set_current_datetime()
+            nonin.set_current_time()
             logging.info('Set Bluetooth Timeout and Date/Time')
 
             # Collect data forever, or until a SIGHUP is received
@@ -106,4 +108,5 @@ if __name__ == "__main__":
 
         except Exception as e:
             logging.error('Exception raised: %s' % e)
-            sleep(1)
+            time.sleep(1)
+
