@@ -8,7 +8,7 @@ import signal
 import argparse
 from Nonin import *
 
-POLLING_INTERVAL = 120
+POLLING_INTERVAL = 105
 
 # When we receive a HUP signal, make sure we exit (cleanly)
 def sighup_handler(signame, frame):
@@ -76,7 +76,7 @@ if __name__ == "__main__":
         try:
             nonin = Nonin3150(args.device)
             logging.info('Connected to %s' % args.device)
-            
+
             # NOTE: Do we need to configure anything here?
             config = nonin.get_config()
             config['BluetoothEnable'] = '1'
@@ -90,21 +90,32 @@ if __name__ == "__main__":
             nonin.set_current_time()
             logging.info('Set Bluetooth Timeout and Date/Time')
 
+            # It's important to clear before the main loop to prevent reads of
+            # previous sessions, which may be quite large and cause read failures
+            logging.info('Clearing session data...')
+            nonin.clear_sessions()
+
             # Collect data forever, or until a SIGHUP is received
             while True:
-                logging.debug('Sleeping (gathering data) for %d seconds' % POLLING_INTERVAL)
-                time.sleep(POLLING_INTERVAL)
+                try:
+                    logging.info('Reading session data...')
+                    sessions = nonin.read_sessions()
 
-                sessions = nonin.read_sessions()
-                logging.info('Read session data')
+                    if sessions is not None:
+                        filename = csv_filename(device_name=args.name)
+                        exporter = Exporter(sessions)
+                        exporter.export(format='csv', filename=filename)
+                        logging.info('Saved data to %s' % filename)
 
-                nonin.clear_sessions()
-                logging.info('Cleared session data')
+                        logging.info('Clearing session data...')
+                        nonin.clear_sessions()
 
-                filename = csv_filename(device_name=args.name)
-                exporter = Exporter(sessions)
-                exporter.export(type='csv', filename=filename)
-                logging.info('Saved data to %s' % filename)
+                        logging.info('Sleeping (gathering data) for %d seconds' % POLLING_INTERVAL)
+                        time.sleep(POLLING_INTERVAL)
+
+                except Exception as e:
+                    logging.error('Exception raised: %s' % e)
+                    time.sleep(1)
 
         except Exception as e:
             logging.error('Exception raised: %s' % e)
